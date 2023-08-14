@@ -1,0 +1,27 @@
+server:
+  port: 8093
+---
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/stockdb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+---
+topic:
+  name:
+    stock:
+      out: "reserve-product"
+      in: "product-reserved"
+      cancel: "cancel-product-reservation"
+---
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      stock-group-id: "stock"
