@@ -24,7 +24,7 @@ public class StockService {
     private void init() {
         stockRepository.save(new Stock(1, 5));
         stockRepository.save(new Stock(2, 5));
-        stockRepository.save(new Stock(3, 5));
+        stockRepository.save(new Stock(3, 3));
     }
 
     public StockService(KafkaProducer kafkaProducer) {
@@ -55,7 +55,7 @@ public class StockService {
         Stock stock = stockRepository
                 .findById(responseDTO.getProductID())
                 .orElseThrow();
-        if (stock.getQuantity() != 0) {
+        if (stock.getQuantity() >= 0) {
             stock.setQuantity(stock.getQuantity() + 1);
             stockRepository.save(stock);
         }
